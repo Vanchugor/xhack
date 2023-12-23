@@ -1,20 +1,20 @@
-from flask import Flask, request, jsonify
+import os
+
+from flask import Flask, request, jsonify, render_template
+
 import config
+app = Flask(__name__, template_folder=config.template_dir, static_folder=config.static_dir)
 
-app = Flask(__name__)
 
-
-@app.route('/api/correct', methods=['POST'])
+@app.route('/api/color_correction', methods=['POST'])
 def color_correction():
-    images = request.files.getlist('images')  # change to one file
     results = {'status': 'success', 'corrected_images': []}
 
-    for img in images:
-        # Обработка каждого изображения и выполнение цветокоррекции
-        corrected_image = img
-
-        # Добавление корректированного изображения в список
-        results['corrected_images'].append(corrected_image)
+    for file in request.files.getlist('file'):
+        filename = file.filename
+        filepath = os.path.join('static/uploads', filename)
+        file.save(filepath)
+        results['corrected_images'].append(filepath)
 
     return jsonify(results)
 
@@ -28,6 +28,10 @@ def glare_out():
 @app.route('/check', methods=['GET'])
 def check():
     return jsonify("aboba")
+
+@app.route('/index.html', methods=['GET'])
+def index():
+    return render_template('index.html')
 
 
 if __name__ == '__main__':
