@@ -5,6 +5,7 @@ import numpy as np
 работа с яркостью картинки
 '''
 
+
 # пересчёт яркости пикселей относительно другого диапазона
 def adjust_brightness(image, left, right):
     ycbcr_image = cv2.cvtColor(image, cv2.COLOR_BGR2YCrCb)
