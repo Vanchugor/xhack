@@ -1,0 +1,5 @@
+path,percentile1,percentile2
+../pic1.jpg,5,75
+../pic2.png,20,95
+../pic3.png,5,95
+```
